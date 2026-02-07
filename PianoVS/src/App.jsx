@@ -1,9 +1,17 @@
 import { useState } from "react";
 
-function App() {
-  const [count, setCount] = useState(0);
-
-  return <></>;
+export default function App() {
+  const [gameMode, setGameMode] = useState("menu");
+  switch (gameMode) {
+    case "menu":
+      // put menu code here and make sure you can change game mode
+      // temp
+      return (
+        <button onClick={() => setGameMode("horse")}>Start Horse Game</button>
+      );
+    case "horse":
+      return <Horse setGameMode={setGameMode} />;
+    default:
+      return <div>ERROR</div>;
+  }
 }
-
-export default App;
