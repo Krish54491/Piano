@@ -300,9 +300,13 @@ function handleNotePlay(note) {
     setTimeout(() => keyBtn.classList.remove("active"), 150);
   }
 
-  // Record if recording
+  // Record if recording (max 30 notes)
   if (isRecording) {
-    recordedNotes.push({ note, timestamp: Date.now() });
+    if (recordedNotes.length < 30) {
+      recordedNotes.push({ note, timestamp: Date.now() });
+    } else {
+      showMessage("Maximum 30 notes reached! Click Done to submit.");
+    }
   }
 }
 
