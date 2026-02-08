@@ -29,13 +29,17 @@ button {
   border-radius: 4px;
 }
 
-#lobby button, #controls button, #game-over button {
+#lobby button,
+#controls button,
+#game-over button {
   background: #4a69bd;
   color: white;
   margin: 5px;
 }
 
-#lobby button:hover, #controls button:hover, #game-over button:hover {
+#lobby button:hover,
+#controls button:hover,
+#game-over button:hover {
   background: #6a89cc;
 }
 
@@ -89,6 +93,11 @@ button {
   border: 1px solid #333;
   margin: 0 1px;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: column;
+  padding-bottom: 10px;
 }
 
 #white-keys button:hover {
@@ -147,4 +156,3 @@ button {
 #game-over h2 {
   font-size: 28px;
 }
-
