@@ -28,30 +28,71 @@ const NOTE_FREQS = {
 
 // Key to note mapping
 const KEY_MAP = {
-  a: "C4",
-  s: "D4",
-  d: "E4",
-  f: "F4",
-  g: "G4",
-  h: "A4",
-  j: "B4",
-  k: "C5",
-  l: "D5",
-  ";": "E5",
-  "'": "F5",
-  z: "G5",
+  a: "C3",
+  s: "D3",
+  d: "E3",
+  f: "F3",
+  g: "G3",
+  h: "A3",
+  j: "B3",
+  k: "C4",
+  l: "D4",
+  ";": "E4",
+  "'": "F4",
+  z: "C5",
   x: "A5",
   v: "B5",
-  w: "C#4",
-  e: "D#4",
-  t: "F#4",
-  y: "G#4",
-  u: "A#4",
-  o: "C#5",
-  p: "D#5",
-  "[": "F#5",
-  "]": "G#5",
-  c: "A#5",
+  w: "C#3",
+  e: "D#3",
+  t: "F#3",
+  y: "G#3",
+  u: "A#3",
+  o: "C#4",
+  p: "D#4",
+  "[": "F#4",
+  "]": "G#4",
+  c: "A#4",
+  b: "C5",
+};
+
+// MIDI note number to note name mapping (MIDI C4 = 60)
+const MIDI_NOTE_MAP = {
+  48: "C3",
+  49: "C#3",
+  50: "D3",
+  51: "D#3",
+  52: "E3",
+  53: "F3",
+  54: "F#3",
+  55: "G3",
+  56: "G#3",
+  57: "A3",
+  58: "A#3",
+  59: "B3",
+  60: "C4",
+  61: "C#4",
+  62: "D4",
+  63: "D#4",
+  64: "E4",
+  65: "F4",
+  66: "F#4",
+  67: "G4",
+  68: "G#4",
+  69: "A4",
+  70: "A#4",
+  71: "B4",
+  72: "C5",
+  73: "C#5",
+  74: "D5",
+  75: "D#5",
+  76: "E5",
+  77: "F5",
+  78: "F#5",
+  79: "G5",
+  80: "G#5",
+  81: "A5",
+  82: "A#5",
+  83: "B5",
 };
 
 let audioCtx = null;
@@ -407,3 +448,47 @@ if (pathRoomId && pathRoomId.length === 8) {
   lobby.innerHTML = "<p>Joining game...</p>";
   connectWebSocket();
 }
+
+function setupMidi() {
+  if (!window.WebMidi) {
+    console.warn("WebMidi not available");
+    return;
+  }
+
+  // If no MIDI devices
+  if (WebMidi.inputs.length === 0) {
+    console.warn("No MIDI input devices detected");
+    return;
+  }
+
+  const input = WebMidi.inputs[0];
+  console.log("Using MIDI input:", input.name);
+
+  // Listen for note-on events
+  input.addListener("noteon", "all", (e) => {
+    const midiNumber = e.note.number; // e.g. 60
+    const noteName = MIDI_NOTE_MAP[midiNumber];
+
+    if (noteName) {
+      handleNotePlay(noteName);
+    }
+  });
+}
+// Wait until WebMidi is ready
+if (window.WebMidi) {
+  if (WebMidi.enabled) {
+    setupMidi();
+  } else {
+    WebMidi.enable()
+      .then(setupMidi)
+      .catch((err) => console.error("MIDI error:", err));
+  }
+}
+input.addListener("noteon", "all", (e) => {
+  if (e.velocity < 0.1) return;
+
+  const noteName = MIDI_NOTE_MAP[e.note.number];
+  if (noteName) {
+    handleNotePlay(noteName);
+  }
+});

@@ -15,6 +15,7 @@
       // Function triggered when WEBMIDI.js is ready
       function onEnabled() {
         // Display available MIDI input devices
+
         if (WebMidi.inputs.length < 1) {
           alert("No device detected.");
         }
@@ -48,35 +49,36 @@
 
         <div id="piano">
           <div id="black-keys">
-            <button data-note="C#4" data-key="W">W</button>
-            <button data-note="D#4" data-key="E">E</button>
+            <button data-note="C#3" data-key="W">W</button>
+            <button data-note="D#3" data-key="E">E</button>
             <span class="spacer"></span>
-            <button data-note="F#4" data-key="T">T</button>
-            <button data-note="G#4" data-key="Y">Y</button>
-            <button data-note="A#4" data-key="U">U</button>
+            <button data-note="F#3" data-key="T">T</button>
+            <button data-note="G#3" data-key="Y">Y</button>
+            <button data-note="A#3" data-key="U">U</button>
             <span class="spacer"></span>
-            <button data-note="C#5" data-key="O">O</button>
-            <button data-note="D#5" data-key="P">P</button>
+            <button data-note="C#4" data-key="O">O</button>
+            <button data-note="D#4" data-key="P">P</button>
             <span class="spacer"></span>
-            <button data-note="F#5" data-key="[">[</button>
-            <button data-note="G#5" data-key="]">]</button>
-            <button data-note="A#5" data-key="C">C</button>
+            <button data-note="F#4" data-key="[">[</button>
+            <button data-note="G#4" data-key="]">]</button>
+            <button data-note="A#4" data-key="C">C</button>
           </div>
           <div id="white-keys">
-            <button data-note="C4" data-key="A">A</button>
-            <button data-note="D4" data-key="S">S</button>
-            <button data-note="E4" data-key="D">D</button>
-            <button data-note="F4" data-key="F">F</button>
-            <button data-note="G4" data-key="G">G</button>
-            <button data-note="A4" data-key="H">H</button>
-            <button data-note="B4" data-key="J">J</button>
-            <button data-note="C5" data-key="K">K</button>
-            <button data-note="D5" data-key="L">L</button>
-            <button data-note="E5" data-key=";">;</button>
-            <button data-note="F5" data-key="'">'</button>
-            <button data-note="G5" data-key="Z">Z</button>
-            <button data-note="A5" data-key="X">X</button>
-            <button data-note="B5" data-key="V">V</button>
+            <button data-note="C3" data-key="A">A</button>
+            <button data-note="D3" data-key="S">S</button>
+            <button data-note="E3" data-key="D">D</button>
+            <button data-note="F3" data-key="F">F</button>
+            <button data-note="G3" data-key="G">G</button>
+            <button data-note="A3" data-key="H">H</button>
+            <button data-note="B3" data-key="J">J</button>
+            <button data-note="C4" data-key="K">K</button>
+            <button data-note="D4" data-key="L">L</button>
+            <button data-note="E4" data-key=";">;</button>
+            <button data-note="F4" data-key="'">'</button>
+            <button data-note="G4" data-key="Z">Z</button>
+            <button data-note="A4" data-key="X">X</button>
+            <button data-note="B4" data-key="V">V</button>
+            <button data-note="C5" data-key="B">B</button>
           </div>
         </div>
 
