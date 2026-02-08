@@ -37,32 +37,63 @@ const NOTE_FREQS = {
   "A#5": 932.33,
   B5: 987.77,
 };
-
+const NOTE_PATHS = {
+  C3: "assets/notes/48.mp3",
+  "C#3": "assets/notes/49.mp3",
+  D3: "assets/notes/50.mp3",
+  "D#3": "assets/notes/51.mp3",
+  E3: "assets/notes/52.mp3",
+  F3: "assets/notes/53.mp3",
+  "F#3": "assets/notes/54.mp3",
+  G3: "assets/notes/55.mp3",
+  "G#3": "assets/notes/56.mp3",
+  A3: "assets/notes/57.mp3",
+  "A#3": "assets/notes/58.mp3",
+  B3: "assets/notes/59.mp3",
+  C4: "assets/notes/60.mp3",
+  "C#4": "assets/notes/61.mp3",
+  D4: "assets/notes/62.mp3",
+  "D#4": "assets/notes/63.mp3",
+  E4: "assets/notes/64.mp3",
+  F4: "assets/notes/65.mp3",
+  "F#4": "assets/notes/66.mp3",
+  G4: "assets/notes/67.mp3",
+  "G#4": "assets/notes/68.mp3",
+  A4: "assets/notes/69.mp3",
+  "A#4": "assets/notes/70.mp3",
+  B4: "assets/notes/71.mp3",
+  C5: "assets/notes/72.mp3",
+};
 // Key to note mapping
 const KEY_MAP = {
   a: "C3",
+  w: "C#3",
   s: "D3",
+  e: "D#3",
   d: "E3",
   f: "F3",
+  t: "F#3",
   g: "G3",
+  y: "G#3",
+
   h: "A3",
+  u: "A#3",
   j: "B3",
+
   k: "C4",
+  o: "C#4",
+
   l: "D4",
+  p: "D#4",
+
   ";": "E4",
   "'": "F4",
-  z: "C5",
-  x: "A5",
-  v: "B5",
-  w: "C#3",
-  e: "D#3",
-  t: "F#3",
-  y: "G#3",
-  u: "A#3",
-  o: "C#4",
-  p: "D#4",
   "[": "F#4",
+  z: "G4",
   "]": "G#4",
+
+  x: "A4",
+  v: "B4",
   c: "A#4",
   b: "C5",
 };
@@ -93,7 +124,7 @@ const MIDI_NOTE_MAP = {
   69: "A4",
   70: "A#4",
   71: "B4",
-  72: "C5",
+  72: "C5", // end of use for our midi
   73: "C#5",
   74: "D5",
   75: "D#5",
@@ -117,24 +148,26 @@ function getAudioContext() {
 }
 
 function playNote(note, duration = 0.3) {
-  const ctx = getAudioContext();
-  const freq = NOTE_FREQS[note];
-  if (!freq) return;
+  // const ctx = getAudioContext();
+  // const freq = NOTE_FREQS[note];
+  // if (!freq) return;
 
-  const osc = ctx.createOscillator();
-  const gain = ctx.createGain();
+  // const osc = ctx.createOscillator();
+  // const gain = ctx.createGain();
 
-  osc.type = "sine";
-  osc.frequency.value = freq;
+  // osc.type = "sine";
+  // osc.frequency.value = freq;
 
-  gain.gain.setValueAtTime(0.3, ctx.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
+  // gain.gain.setValueAtTime(0.3, ctx.currentTime);
+  // gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
 
-  osc.connect(gain);
-  gain.connect(ctx.destination);
+  // osc.connect(gain);
+  // gain.connect(ctx.destination);
 
-  osc.start();
-  osc.stop(ctx.currentTime + duration);
+  // osc.start();
+  // osc.stop(ctx.currentTime + duration);
+  const audio = new Audio(NOTE_PATHS[note]);
+  audio.play();
 }
 
 // State
