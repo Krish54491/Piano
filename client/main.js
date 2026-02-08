@@ -1,5 +1,17 @@
 // Note frequencies (Hz)
 const NOTE_FREQS = {
+  C3: 130.81,
+  "C#3": 138.59,
+  D3: 146.83,
+  "D#3": 155.56,
+  E3: 164.81,
+  F3: 174.61,
+  "F#3": 185.0,
+  G3: 196.0,
+  "G#3": 207.65,
+  A3: 220.0,
+  "A#3": 233.08,
+  B3: 246.94,
   C4: 261.63,
   "C#4": 277.18,
   D4: 293.66,
@@ -281,7 +293,10 @@ function handleMessage(msg) {
       stopTimer();
       updateLetters(msg.letters);
 
-      const wasMyAttempt = msg.currentTurn === playerIndex;
+      const wasMyAttempt =
+        msg.currentTurn === playerIndex
+          ? true
+          : isWithinHalfStep(msg.attemptedNote, msg.targetNote);
       if (wasMyAttempt) {
         // I just attempted, now I record
         showMessage(
@@ -492,3 +507,22 @@ input.addListener("noteon", "all", (e) => {
     handleNotePlay(noteName);
   }
 });
+function isWithinHalfStep(noteA, noteB) {
+  if (!noteA || !noteB) return false;
+
+  // Reverse lookup: note name → MIDI number
+  const noteToMidi = Object.entries(MIDI_NOTE_MAP).reduce(
+    (acc, [midi, name]) => {
+      acc[name] = Number(midi);
+      return acc;
+    },
+    {},
+  );
+
+  const midiA = noteToMidi[noteA];
+  const midiB = noteToMidi[noteB];
+
+  if (midiA === undefined || midiB === undefined) return false;
+
+  return Math.abs(midiA - midiB) <= 1;
+}
