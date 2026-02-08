@@ -158,3 +158,27 @@ button {
 #game-over h2 {
   font-size: 28px;
 }
+
+@keyframes hand {
+  0% {
+    transform: translateY(80px) translateX(25px);
+  }
+  25% {
+    transform: translateY(0px) translateX(0px);
+  }
+  50% {
+    transform: translateY(80px) translateX(-25px);
+  }
+  75% {
+    transform: translateY(0px) translateX(0px);
+  }
+  100% {
+    transform: translateY(80px) translateX(25px);
+  }
+}
+
+.hand-bounce {
+  animation-name: hand;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
