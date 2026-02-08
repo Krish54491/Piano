@@ -38,31 +38,31 @@ const NOTE_FREQS = {
   B5: 987.77,
 };
 const NOTE_PATHS = {
-  C3: "client/assets/notes/48.mp3",
-  "C#3": "client/assets/notes/49.mp3",
-  D3: "client/assets/notes/50.mp3",
-  "D#3": "client/assets/notes/51.mp3",
-  E3: "client/assets/notes/52.mp3",
-  F3: "client/assets/notes/53.mp3",
-  "F#3": "client/assets/notes/54.mp3",
-  G3: "client/assets/notes/55.mp3",
-  "G#3": "client/assets/notes/56.mp3",
-  A3: "client/assets/notes/57.mp3",
-  "A#3": "client/assets/notes/58.mp3",
-  B3: "client/assets/notes/59.mp3",
-  C4: "client/assets/notes/60.mp3",
-  "C#4": "client/assets/notes/61.mp3",
-  D4: "client/assets/notes/62.mp3",
-  "D#4": "client/assets/notes/63.mp3",
-  E4: "client/assets/notes/64.mp3",
-  F4: "client/assets/notes/65.mp3",
-  "F#4": "client/assets/notes/66.mp3",
-  G4: "client/assets/notes/67.mp3",
-  "G#4": "client/assets/notes/68.mp3",
-  A4: "client/assets/notes/69.mp3",
-  "A#4": "client/assets/notes/70.mp3",
-  B4: "client/assets/notes/71.mp3",
-  C5: "client/assets/notes/72.mp3",
+  C3: "assets/notes/48.mp3",
+  "C#3": "assets/notes/49.mp3",
+  D3: "assets/notes/50.mp3",
+  "D#3": "assets/notes/51.mp3",
+  E3: "assets/notes/52.mp3",
+  F3: "assets/notes/53.mp3",
+  "F#3": "assets/notes/54.mp3",
+  G3: "assets/notes/55.mp3",
+  "G#3": "assets/notes/56.mp3",
+  A3: "assets/notes/57.mp3",
+  "A#3": "assets/notes/58.mp3",
+  B3: "assets/notes/59.mp3",
+  C4: "assets/notes/60.mp3",
+  "C#4": "assets/notes/61.mp3",
+  D4: "assets/notes/62.mp3",
+  "D#4": "assets/notes/63.mp3",
+  E4: "assets/notes/64.mp3",
+  F4: "assets/notes/65.mp3",
+  "F#4": "assets/notes/66.mp3",
+  G4: "assets/notes/67.mp3",
+  "G#4": "assets/notes/68.mp3",
+  A4: "assets/notes/69.mp3",
+  "A#4": "assets/notes/70.mp3",
+  B4: "assets/notes/71.mp3",
+  C5: "assets/notes/72.mp3",
 };
 // Key to note mapping
 const KEY_MAP = {
@@ -148,26 +148,26 @@ function getAudioContext() {
 }
 
 function playNote(note, duration = 0.3) {
-  const ctx = getAudioContext();
-  const freq = NOTE_FREQS[note];
-  if (!freq) return;
+  // const ctx = getAudioContext();
+  // const freq = NOTE_FREQS[note];
+  // if (!freq) return;
 
-  const osc = ctx.createOscillator();
-  const gain = ctx.createGain();
+  // const osc = ctx.createOscillator();
+  // const gain = ctx.createGain();
 
-  osc.type = "sine";
-  osc.frequency.value = freq;
+  // osc.type = "sine";
+  // osc.frequency.value = freq;
 
-  gain.gain.setValueAtTime(0.3, ctx.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
+  // gain.gain.setValueAtTime(0.3, ctx.currentTime);
+  // gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
 
-  osc.connect(gain);
-  gain.connect(ctx.destination);
+  // osc.connect(gain);
+  // gain.connect(ctx.destination);
 
-  osc.start();
-  osc.stop(ctx.currentTime + duration);
-  // const audio = new Audio(NOTE_PATHS[note]);
-  // audio.play();
+  // osc.start();
+  // osc.stop(ctx.currentTime + duration);
+  const audio = new Audio(NOTE_PATHS[note]);
+  audio.play();
 }
 
 // State
