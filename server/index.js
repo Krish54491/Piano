@@ -1,6 +1,6 @@
-import { WebSocketServer } from 'ws';
-import { createServer } from 'http';
-import { randomBytes } from 'crypto';
+import { WebSocketServer } from "ws";
+import { createServer } from "http";
+import { randomBytes } from "crypto";
 
 const PORT = 3001;
 const rooms = new Map();
@@ -9,7 +9,7 @@ const server = createServer();
 const wss = new WebSocketServer({ server });
 
 function generateRoomId() {
-  return randomBytes(4).toString('hex');
+  return randomBytes(4).toString("hex");
 }
 
 // Duration quantization (matches client)
@@ -43,8 +43,12 @@ function compareNotes(original, attempt) {
   }
 
   // Filter to get only chord/note events (exclude rests for length comparison)
-  const origChords = original.filter(e => e.type === 'chord' || e.notes || e.note);
-  const attemptChords = attempt.filter(e => e.type === 'chord' || e.notes || e.note);
+  const origChords = original.filter(
+    (e) => e.type === "chord" || e.notes || e.note,
+  );
+  const attemptChords = attempt.filter(
+    (e) => e.type === "chord" || e.notes || e.note,
+  );
 
   // Generous comparison: allow ±1 extra/missing chord events
   if (Math.abs(origChords.length - attemptChords.length) > 1) {
@@ -87,8 +91,8 @@ function compareNotes(original, attempt) {
   }
 
   // Also check rest patterns (lenient - just check if rests exist in similar positions)
-  const origRests = original.filter(e => e.type === 'rest');
-  const attemptRests = attempt.filter(e => e.type === 'rest');
+  const origRests = original.filter((e) => e.type === "rest");
+  const attemptRests = attempt.filter((e) => e.type === "rest");
 
   // If original has rests, attempt should have at least some rests (within tolerance)
   if (origRests.length > 0 && attemptRests.length === 0) {
@@ -108,15 +112,15 @@ function arraysEqual(a, b) {
 }
 
 function getNextLetter(currentLetters) {
-  const MAGIC = 'MAGIC';
-  return MAGIC[currentLetters.length] || '';
+  const MAGIC = "MAGIC";
+  return MAGIC[currentLetters.length] || "";
 }
 
-wss.on('connection', (ws) => {
+wss.on("connection", (ws) => {
   let playerRoomId = null;
   let playerIndex = null;
 
-  ws.on('message', (data) => {
+  ws.on("message", (data) => {
     let msg;
     try {
       msg = JSON.parse(data);
@@ -125,75 +129,75 @@ wss.on('connection', (ws) => {
     }
 
     switch (msg.type) {
-      case 'create-room': {
+      case "create-room": {
         const roomId = generateRoomId();
         rooms.set(roomId, {
-          players: [{ ws, name: msg.name || 'Player 1' }],
+          players: [{ ws, name: msg.name || "Player 1" }],
           currentTurn: 0,
           melody: null,
-          letters: ['', ''],
-          phase: 'waiting', // waiting, recording, replaying
+          letters: ["", ""],
+          phase: "waiting", // waiting, recording, replaying
         });
         playerRoomId = roomId;
         playerIndex = 0;
-        sendTo(ws, { type: 'room-created', roomId, playerIndex: 0 });
+        sendTo(ws, { type: "room-created", roomId, playerIndex: 0 });
         break;
       }
 
-      case 'join-room': {
+      case "join-room": {
         const room = rooms.get(msg.roomId);
         if (!room) {
-          sendTo(ws, { type: 'error', message: 'Room not found' });
+          sendTo(ws, { type: "error", message: "Room not found" });
           return;
         }
         if (room.players.length >= 2) {
-          sendTo(ws, { type: 'error', message: 'Room is full' });
+          sendTo(ws, { type: "error", message: "Room is full" });
           return;
         }
-        room.players.push({ ws, name: msg.name || 'Player 2' });
+        room.players.push({ ws, name: msg.name || "Player 2" });
         playerRoomId = msg.roomId;
         playerIndex = 1;
 
         sendTo(ws, {
-          type: 'room-joined',
+          type: "room-joined",
           roomId: msg.roomId,
           playerIndex: 1,
-          opponentName: room.players[0].name
+          opponentName: room.players[0].name,
         });
 
         // Notify player 1 that player 2 joined
         sendTo(room.players[0].ws, {
-          type: 'opponent-joined',
-          opponentName: room.players[1].name
+          type: "opponent-joined",
+          opponentName: room.players[1].name,
         });
 
         // Start the game - player 0 records first
-        room.phase = 'recording';
+        room.phase = "recording";
         broadcast(room, {
-          type: 'game-start',
+          type: "game-start",
           currentTurn: 0,
-          letters: room.letters
+          letters: room.letters,
         });
         break;
       }
 
-      case 'melody-submit': {
+      case "melody-submit": {
         const room = rooms.get(playerRoomId);
         if (!room || room.currentTurn !== playerIndex) return;
 
         room.melody = msg.notes;
-        room.phase = 'replaying';
+        room.phase = "replaying";
 
         // Send melody to opponent for playback
         const opponentIndex = playerIndex === 0 ? 1 : 0;
         sendTo(room.players[opponentIndex].ws, {
-          type: 'melody-received',
-          notes: msg.notes
+          type: "melody-received",
+          notes: msg.notes,
         });
         break;
       }
 
-      case 'attempt-submit': {
+      case "attempt-submit": {
         const room = rooms.get(playerRoomId);
         if (!room || room.currentTurn === playerIndex) return;
 
@@ -207,73 +211,72 @@ wss.on('connection', (ws) => {
         // Check for game over
         if (room.letters[playerIndex].length >= 5) {
           broadcast(room, {
-            type: 'game-over',
+            type: "game-over",
             loser: playerIndex,
-            letters: room.letters
+            letters: room.letters,
           });
-          room.phase = 'ended';
+          room.phase = "ended";
           return;
         }
 
         // Switch turns - the one who just attempted now records
         room.currentTurn = playerIndex;
         room.melody = null;
-        room.phase = 'recording';
+        room.phase = "recording";
 
         broadcast(room, {
-          type: 'turn-result',
+          type: "turn-result",
           success,
           letters: room.letters,
-          currentTurn: room.currentTurn
+          currentTurn: room.currentTurn,
         });
         break;
       }
 
-      case 'new-game': {
+      case "new-game": {
         const room = rooms.get(playerRoomId);
         if (!room) return;
 
-        room.letters = ['', ''];
+        room.letters = ["", ""];
         room.currentTurn = 0;
         room.melody = null;
-        room.phase = 'recording';
+        room.phase = "recording";
 
         broadcast(room, {
-          type: 'game-start',
+          type: "game-start",
           currentTurn: 0,
-          letters: room.letters
+          letters: room.letters,
         });
         break;
       }
 
-      case 'forfeit': {
+      case "forfeit": {
         const room = rooms.get(playerRoomId);
         if (!room) return;
 
         // Player who forfeits loses
         broadcast(room, {
-          type: 'game-over',
+          type: "game-over",
           loser: playerIndex,
-          letters: room.letters
+          letters: room.letters,
         });
-        room.phase = 'ended';
+        room.phase = "ended";
         break;
       }
     }
   });
 
-  ws.on('close', () => {
+  ws.on("close", () => {
     if (playerRoomId) {
       const room = rooms.get(playerRoomId);
       if (room) {
-        broadcast(room, { type: 'opponent-disconnected' }, ws);
+        broadcast(room, { type: "opponent-disconnected" }, ws);
         rooms.delete(playerRoomId);
       }
     }
   });
 });
 
-server.listen(PORT, '0.0.0.0', () => {
+server.listen(PORT, "0.0.0.0", () => {
   console.log(`WebSocket server running on ws://0.0.0.0:${PORT}`);
 });
-
