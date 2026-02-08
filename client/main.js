@@ -37,32 +37,63 @@ const NOTE_FREQS = {
   "A#5": 932.33,
   B5: 987.77,
 };
-
+const NOTE_PATHS = {
+  C3: "client/assets/notes/48.mp3",
+  "C#3": "client/assets/notes/49.mp3",
+  D3: "client/assets/notes/50.mp3",
+  "D#3": "client/assets/notes/51.mp3",
+  E3: "client/assets/notes/52.mp3",
+  F3: "client/assets/notes/53.mp3",
+  "F#3": "client/assets/notes/54.mp3",
+  G3: "client/assets/notes/55.mp3",
+  "G#3": "client/assets/notes/56.mp3",
+  A3: "client/assets/notes/57.mp3",
+  "A#3": "client/assets/notes/58.mp3",
+  B3: "client/assets/notes/59.mp3",
+  C4: "client/assets/notes/60.mp3",
+  "C#4": "client/assets/notes/61.mp3",
+  D4: "client/assets/notes/62.mp3",
+  "D#4": "client/assets/notes/63.mp3",
+  E4: "client/assets/notes/64.mp3",
+  F4: "client/assets/notes/65.mp3",
+  "F#4": "client/assets/notes/66.mp3",
+  G4: "client/assets/notes/67.mp3",
+  "G#4": "client/assets/notes/68.mp3",
+  A4: "client/assets/notes/69.mp3",
+  "A#4": "client/assets/notes/70.mp3",
+  B4: "client/assets/notes/71.mp3",
+  C5: "client/assets/notes/72.mp3",
+};
 // Key to note mapping
 const KEY_MAP = {
   a: "C3",
+  w: "C#3",
   s: "D3",
+  e: "D#3",
   d: "E3",
   f: "F3",
+  t: "F#3",
   g: "G3",
+  y: "G#3",
+
   h: "A3",
+  u: "A#3",
   j: "B3",
+
   k: "C4",
+  o: "C#4",
+
   l: "D4",
+  p: "D#4",
+
   ";": "E4",
   "'": "F4",
-  z: "C5",
-  x: "A5",
-  v: "B5",
-  w: "C#3",
-  e: "D#3",
-  t: "F#3",
-  y: "G#3",
-  u: "A#3",
-  o: "C#4",
-  p: "D#4",
   "[": "F#4",
+  z: "G4",
   "]": "G#4",
+
+  x: "A4",
+  v: "B4",
   c: "A#4",
   b: "C5",
 };
@@ -93,7 +124,7 @@ const MIDI_NOTE_MAP = {
   69: "A4",
   70: "A#4",
   71: "B4",
-  72: "C5",
+  72: "C5", // end of use for our midi
   73: "C#5",
   74: "D5",
   75: "D#5",
@@ -135,6 +166,8 @@ function playNote(note, duration = 0.3) {
 
   osc.start();
   osc.stop(ctx.currentTime + duration);
+  // const audio = new Audio(NOTE_PATHS[note]);
+  // audio.play();
 }
 
 // State
