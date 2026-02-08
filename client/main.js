@@ -93,6 +93,9 @@ let recordedNotes = [];
 let receivedMelody = null;
 let timerInterval = null;
 let timeLeft = 50;
+const successAudio = new Audio(
+  "assets/bryansantosbreton-christmas-vibes-windy-whoosh-magical-chimes-180863.mp3",
+);
 
 // DOM elements
 const lobby = document.getElementById("lobby");
@@ -243,6 +246,10 @@ function handleMessage(msg) {
         showMessage(
           msg.success ? "Nice! You matched it!" : "Oops! You got a letter.",
         );
+        // play magical sound
+        if (msg.success) {
+          successAudio.play();
+        }
         turnInfo.textContent = "Your turn to record a melody!";
         hideAllControls();
         recordBtn.style.display = "inline-block";
