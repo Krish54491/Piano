@@ -492,10 +492,11 @@ function stopTimer() {
 }
 
 function connectWebSocket() {
+  const port = 3001;
   const protocol = location.protocol === "https:" ? "wss:" : "ws:";
-  //const testUrl = `${protocol}//localhost:3001`; // Local testing
-  const wsUrl = `${protocol}//${window.location.host}`;
-  ws = new WebSocket(wsUrl);
+  const testUrl = `${protocol}//localhost:${port}`; // Local testing
+  const wsUrl = `${protocol}//api.${window.location.host}`;
+  ws = new WebSocket(testUrl);
 
   ws.onopen = () => {
     console.log("Connected to server");
