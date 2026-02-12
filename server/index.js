@@ -2,7 +2,7 @@ import { WebSocketServer } from "ws";
 import { createServer } from "http";
 import { randomBytes } from "crypto";
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 const rooms = new Map();
 
 const server = createServer();
@@ -276,7 +276,6 @@ wss.on("connection", (ws) => {
     }
   });
 });
-
 server.listen(PORT, "0.0.0.0", () => {
   console.log(`WebSocket server running on ws://0.0.0.0:${PORT}`);
 });
