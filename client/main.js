@@ -494,7 +494,7 @@ function stopTimer() {
 function connectWebSocket() {
   const protocol = location.protocol === "https:" ? "wss:" : "ws:";
   //const testUrl = `${protocol}//localhost:3001`; // Local testing
-  const wsUrl = `${protocol}//api.pianowizards.andrewklundt.com`;
+  const wsUrl = `${protocol}//${window.location.host}`;
   ws = new WebSocket(wsUrl);
 
   ws.onopen = () => {
@@ -1081,7 +1081,6 @@ copyBtn.addEventListener("click", () => {
   // Use the Clipboard API to write the text to the clipboard
   navigator.clipboard.writeText(roomLinkInput.value);
   copyBtn.style.background = "rgba(182, 255, 248, 0.8)";
-
 });
 
 // ==================== Join Modal ====================
