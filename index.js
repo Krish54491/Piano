@@ -12,8 +12,8 @@ app.use(express.static(path.join(__dirname, "client/dist")));
 console.log("Serving from:", path.join(__dirname, "client", "dist"));
 
 // Catch-all fallback for SPA
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+app.use((req, res, next) => {
+  res.sendFile(path.join(__dirname, "client/dist/index.html"));
 });
 
 const PORT = process.env.PORT || 3000;
