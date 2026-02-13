@@ -15,12 +15,12 @@ const app = express();
 const __dirname = path.resolve();
 
 // Serve static files first
-app.use(express.static(path.join(__dirname, "client/dist")));
+app.use(express.static(path.join(__dirname, "./client/dist")));
 console.log("Serving from:", path.join(__dirname, "client", "dist"));
 
 // Catch-all fallback for SPA
 app.use((req, res, next) => {
-  res.sendFile(path.join(__dirname, "client/dist/index.html"));
+  res.sendFile(path.join(__dirname, "./client/dist/index.html"));
 });
 
 const PORT = process.env.PORT || 3000;
