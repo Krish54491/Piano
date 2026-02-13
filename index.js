@@ -29,7 +29,7 @@ const rooms = new Map();
 const server = createServer(app);
 const wss = new WebSocketServer({ server });
 
-server.listen(PORT, () => {
+server.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
 });
 function generateRoomId() {
