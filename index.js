@@ -5,10 +5,10 @@ import express from "express";
 import path from "path";
 import fs from "fs";
 
-console.log("Dist exists:", fs.existsSync(distPath));
+console.log("Dist exists:", fs.existsSync("/app/client/dist"));
 console.log(
   "Dist contents:",
-  fs.readdirSync(distPath, { withFileTypes: false }),
+  fs.readdirSync("/app/client/dist", { withFileTypes: false }),
 );
 
 const app = express();
