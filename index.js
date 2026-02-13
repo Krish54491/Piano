@@ -4,6 +4,9 @@ import { randomBytes } from "crypto";
 import express from "express";
 import path from "path";
 import fs from "fs";
+process.on("uncaughtException", (err) => {
+  console.error("UNCAUGHT:", err);
+});
 
 console.log("Dist exists:", fs.existsSync("./client/dist"));
 console.log(
