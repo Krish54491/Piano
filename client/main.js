@@ -492,9 +492,7 @@ function stopTimer() {
 }
 
 function connectWebSocket() {
-  const port = process.env.PORT || 3000; // 3001 for local
   const protocol = location.protocol === "https:" ? "wss:" : "ws:";
-  const testUrl = `${protocol}//localhost:${port}`; // Local testing
   const wsUrl = `${protocol}//${location.host}`; // production URL
   ws = new WebSocket(wsUrl);
 
