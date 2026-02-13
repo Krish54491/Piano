@@ -3,6 +3,13 @@ import { createServer } from "http";
 import { randomBytes } from "crypto";
 import express from "express";
 import path from "path";
+import fs from "fs";
+
+console.log("Dist exists:", fs.existsSync(distPath));
+console.log(
+  "Dist contents:",
+  fs.readdirSync(distPath, { withFileTypes: false }),
+);
 
 const app = express();
 const __dirname = path.resolve();
