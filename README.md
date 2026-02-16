@@ -19,7 +19,7 @@ node index.js
 
 ## How to Play
 
-1. Open http://localhost:5173
+1. Open http://localhost:3000
 2. Click "Create Game" and share the link with a friend
 3. Player 1 records a melody using keyboard keys, then clicks "Done"
 4. Player 2 listens to the melody, then tries to replay it within 50 seconds
