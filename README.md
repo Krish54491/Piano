@@ -1,7 +1,7 @@
 # Piano Wizards Hacklahoma 2026 1st place winner
 
 A simple real-time multiplayer piano game. Take turns playing melodies - one player records, the other tries to replay it. Fail and you get a letter (M-A-G-I-C). First to spell MAGIC loses!
-# Hosted on https://pianowizards-production.up.railway.app/962ddc8a
+# Hosted on https://pianowizards-production.up.railway.app/
 
 
 ## Setup for Local
